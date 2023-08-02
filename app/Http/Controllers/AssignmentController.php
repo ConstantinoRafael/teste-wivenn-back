@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Repositories\AssignmentRepository;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -10,9 +11,9 @@ class AssignmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AssignmentRepository $assignmentRepository)
     {
-        //
+        return $assignmentRepository->all();
     }
 
     /**

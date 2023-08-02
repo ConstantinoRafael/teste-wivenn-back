@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignee;
+use App\Repositories\AssigneeRepository;
 use Illuminate\Http\Request;
 
 class AssigneeController extends Controller
@@ -10,9 +11,9 @@ class AssigneeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AssigneeRepository $assigneeRepository)
     {
-        //
+        return $assigneeRepository->all();
     }
 
     /**
