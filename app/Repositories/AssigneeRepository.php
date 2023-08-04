@@ -10,4 +10,8 @@ class AssigneeRepository
     {
         return Assignee::all();
     }
+    public function getById(string $id)
+    {
+        return Assignee::find($id);
+    }
 }

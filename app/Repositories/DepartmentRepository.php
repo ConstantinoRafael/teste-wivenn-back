@@ -3,12 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Department;
-use Illuminate\Support\Facades\DB;
+use Brick\Math\BigInteger;
 
 class DepartmentRepository
 {
-    public function all()
+    public function getAll()
     {
         return Department::all();
+    }
+
+    public function getById(string $id)
+    {
+        return Department::find($id);
     }
 }

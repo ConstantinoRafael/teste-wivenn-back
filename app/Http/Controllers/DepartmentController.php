@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Repositories\DepartmentRepository;
+use Brick\Math\BigInteger;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -13,7 +14,7 @@ class DepartmentController extends Controller
      */
     public function index(DepartmentRepository $departmentRepository)
     {
-        return $departmentRepository->all();
+        return $departmentRepository->getAll();
     }
 
     /**
@@ -35,9 +36,10 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(DepartmentRepository $departmentRepository, string $id)
     {
-        //
+
+        return $departmentRepository->getById($id);
     }
 
     /**

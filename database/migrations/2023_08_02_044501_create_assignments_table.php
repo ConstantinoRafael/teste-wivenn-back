@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->unsignedBigInteger('assignee_id');
             $table->foreign('assignee_id')->references('id')->on('assignees')->onDelete('cascade')->onUpdate('cascade');
+            $table->dateTime('due_date')->nullable();
             $table->timestamps();
         });
     }

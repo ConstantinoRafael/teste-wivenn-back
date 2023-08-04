@@ -20,9 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('departments', [DepartmentController::class, 'index']);
+Route::get('departments/{id}', [DepartmentController::class, 'show']);
 
 Route::get('assignees', [AssigneeController::class, 'index']);
+Route::get('assignees/{id}', [AssigneeController::class, 'show']);
 
 Route::get('assignments', [AssignmentController::class, 'index']);
+Route::get('assignments/{id}', [AssignmentController::class, 'show']);
 
 Route::get('user', [AuthController::class, 'user']);

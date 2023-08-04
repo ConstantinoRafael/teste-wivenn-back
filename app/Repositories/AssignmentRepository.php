@@ -10,4 +10,8 @@ class AssignmentRepository
     {
         return Assignment::all();
     }
+    public function getById(string $id)
+    {
+        return Assignment::find($id);
+    }
 }

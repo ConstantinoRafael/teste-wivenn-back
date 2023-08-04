@@ -35,9 +35,9 @@ class AssignmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Assignment $assignment)
+    public function show(AssignmentRepository $assignmentRepository, string $id)
     {
-        //
+        return $assignmentRepository->getById($id);
     }
 
     /**

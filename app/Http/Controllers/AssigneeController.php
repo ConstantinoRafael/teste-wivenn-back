@@ -35,9 +35,9 @@ class AssigneeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Assignee $assignee)
+    public function show(AssigneeRepository $assigneeRepository, string $id)
     {
-        //
+        return $assigneeRepository->getById($id);
     }
 
     /**
