@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Department extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
     
     public function assignees() : HasOne
     {

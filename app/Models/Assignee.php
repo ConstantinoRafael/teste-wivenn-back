@@ -12,6 +12,15 @@ class Assignee extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'department_id'
+    ];
+
+
     public function assignments() : HasMany
     {
         return $this->hasMany(Assignment::class);

@@ -10,6 +10,13 @@ class Assignment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'assignee_id',
+        'due_date'
+    ];
+
     public function assignee() : BelongsTo
     {
         return $this->belongsTo(Assignee::class);

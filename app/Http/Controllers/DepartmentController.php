@@ -3,43 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
-use App\Repositories\DepartmentRepository;
-use Brick\Math\BigInteger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(DepartmentRepository $departmentRepository)
+    public function index()
     {
-        return $departmentRepository->getAll();
+        return Department::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $created = Department::create($validator->validated());
+
+        if($created)
+        {
+            return $this->response('Department created', 200, $created);
+        }
+
+        return $this->error('Not created', 400);
+
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(DepartmentRepository $departmentRepository, string $id)
+    public function show(string $id)
     {
 
-        return $departmentRepository->getById($id);
+        return Department::fing($id);
     }
 
     /**

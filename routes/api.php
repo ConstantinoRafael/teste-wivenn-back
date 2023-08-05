@@ -4,8 +4,7 @@ use App\Http\Controllers\AssigneeController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
-use App\Repositories\AssignmentRepository;
-use Illuminate\Http\Request;
+use App\Repositories\AssigneeRepository;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +20,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('departments', [DepartmentController::class, 'index']);
 Route::get('departments/{id}', [DepartmentController::class, 'show']);
+Route::post('departments', [DepartmentController::class, 'store']);
+
 
 Route::get('assignees', [AssigneeController::class, 'index']);
 Route::get('assignees/{id}', [AssigneeController::class, 'show']);
+Route::post('assignees', [AssigneeController::class, 'store']);
 
 Route::get('assignments', [AssignmentController::class, 'index']);
 Route::get('assignments/{id}', [AssignmentController::class, 'show']);

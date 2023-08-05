@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
-use App\Repositories\AssignmentRepository;
+
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -11,9 +11,9 @@ class AssignmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(AssignmentRepository $assignmentRepository)
+    public function index()
     {
-        return $assignmentRepository->all();
+        return Assignment::all();
     }
 
     /**
@@ -35,9 +35,9 @@ class AssignmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AssignmentRepository $assignmentRepository, string $id)
+    public function show(string $id)
     {
-        return $assignmentRepository->getById($id);
+        return Assignment::find($id);
     }
 
     /**
