@@ -109,8 +109,21 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(string $id)
     {
-        //
+        $deleted = Department::find($id)->delete();
+
+        if($deleted)
+        {
+            return response()->json([
+                'message' => 'Deleted',
+                'status' => 200
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Not deleted',
+            'status' => 400
+        ]);
     }
 }

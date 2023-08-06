@@ -123,8 +123,21 @@ class AssignmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Assignment $assignment)
+    public function destroy(string $id)
     {
-        //
+        $deleted = Assignment::find($id)->delete();
+
+        if($deleted)
+        {
+            return response()->json([
+                'message' => 'Deleted',
+                'status' => 200
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Not deleted',
+            'status' => 400
+        ]);
     }
 }

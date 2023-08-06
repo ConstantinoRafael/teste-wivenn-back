@@ -127,8 +127,21 @@ class AssigneeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Assignee $assignee)
+    public function destroy(string $id)
     {
-        //
+        $deleted = Assignee::find($id)->delete();
+
+        if($deleted)
+        {
+            return response()->json([
+                'message' => 'Deleted',
+                'status' => 200
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Not deleted',
+            'status' => 400
+        ]);
     }
 }
