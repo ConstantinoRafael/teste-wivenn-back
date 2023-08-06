@@ -33,7 +33,7 @@ class AssigneeController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric|nullable',
+            'phone' => 'required|nullable',
             'department_id' => 'required'
         ]);
 
@@ -44,7 +44,9 @@ class AssigneeController extends Controller
 
         //Procurar o email pra ver se é único...
         
-        $created = Assignee::create($validator->validated());
+        $validated = $validator->validated();
+
+        $created = Assignee::create($validated);
 
         if($created)
         {
@@ -81,9 +83,45 @@ class AssigneeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Assignee $assignee)
+    public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|nullable',
+            'department_id' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $validated = $validator->validated();
+
+        $updated = Assignee::find($id)->update([
+            'firstName' => $validated['firstName'],
+            'lastName' => $validated['lastName'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'department_id' => $validated['department_id']
+        ]);
+
+        if($updated)
+        {
+            return response()->json([
+                'message' => 'Updated',
+                'status' => 200,
+                'data' => $request->all()
+            ]);
+           
+        }
+
+        return response()->json([
+            'message' => 'Not updated',
+            'status' => 400
+        ]);
     }
 
     /**

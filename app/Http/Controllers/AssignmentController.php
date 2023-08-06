@@ -41,8 +41,10 @@ class AssignmentController extends Controller
         {
             return response()->json($validator->errors(), 422);
         }
+
+        $validated = $validator->validated();
         
-        $created = Assignment::create($validator->validated());
+        $created = Assignment::create($validated);
 
         if($created)
         {
@@ -79,9 +81,43 @@ class AssignmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Assignment $assignment)
+    public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+            'assignee_id' => 'required',
+            'due_date' => 'nullable',
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $validated = $validator->validated();
+
+        $updated = Assignment::find($id)->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'assignee_id' => $validated['assignee_id'],
+            'due_date' => $validated['due_date'],
+        ]);
+
+        if($updated)
+        {
+            return response()->json([
+                'message' => 'Updated',
+                'status' => 200,
+                'data' => $request->all()
+            ]);
+           
+        }
+
+        return response()->json([
+            'message' => 'Not updated',
+            'status' => 400
+        ]);
     }
 
     /**

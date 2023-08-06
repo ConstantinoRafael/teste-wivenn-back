@@ -30,8 +30,10 @@ class DepartmentController extends Controller
         {
             return response()->json($validator->errors(), 422);
         }
+
+        $validated = $validator->validated();
         
-        $created = Department::create($validator->validated());
+        $created = Department::create($validated);
 
         if($created)
         {
@@ -71,9 +73,37 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $validated = $validator->validated();
+
+        $updated = Department::find($id)->update([
+            'name' => $validated['name']
+        ]);
+
+        if($updated)
+        {
+            return response()->json([
+                'message' => 'Updated',
+                'status' => 200,
+                'data' => $request->all()
+            ]);
+           
+        }
+
+        return response()->json([
+            'message' => 'Not updated',
+            'status' => 400
+        ]);
     }
 
     /**
