@@ -35,12 +35,20 @@ class DepartmentController extends Controller
 
         if($created)
         {
-            return $this->response('Department created', 200, $created);
+            return response()->json([
+                'message' => 'Created',
+                'status' => 200,
+                'data' => $created
+            ]);
+           
         }
 
-        return $this->error('Not created', 400);
-
-
+        return response()->json([
+            'message' => 'Not created',
+            'status' => 400
+        ]);
+      
+        
     }
 
     /**
@@ -49,7 +57,7 @@ class DepartmentController extends Controller
     public function show(string $id)
     {
 
-        return Department::fing($id);
+        return Department::find($id);
     }
 
     /**

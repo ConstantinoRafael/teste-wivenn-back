@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AssignmentController extends Controller
 {
@@ -29,7 +30,34 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
+            'description' => 'required',
+            'assignee_id' => 'required',
+            'due_date' => 'nullable',
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $created = Assignment::create($validator->validated());
+
+        if($created)
+        {
+            return response()->json([
+                'message' => 'Created',
+                'status' => 200,
+                'data' => $created
+            ]);
+           
+        }
+
+        return response()->json([
+            'message' => 'Not created',
+            'status' => 400
+        ]);
     }
 
     /**

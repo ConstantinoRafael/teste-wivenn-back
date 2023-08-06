@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AssigneeController extends Controller
 {
@@ -28,7 +29,37 @@ class AssigneeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|nullable',
+            'department_id' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 422);
+        }
+
+        //Procurar o email pra ver se é único...
+        
+        $created = Assignee::create($validator->validated());
+
+        if($created)
+        {
+            return response()->json([
+                'message' => 'Created',
+                'status' => 200,
+                'data' => $created
+            ]);
+           
+        }
+
+        return response()->json([
+            'message' => 'Not created',
+            'status' => 400
+        ]);
     }
 
     /**
